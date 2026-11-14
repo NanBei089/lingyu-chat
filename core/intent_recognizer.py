@@ -69,7 +69,7 @@ class IntentRecognizer:
     """
       意图识别器：通过大语言模型识别用户输入的意图，输出IntentResult对象
     """
-    def __init__(self,llm:ChatTongyi):
+    def __init__(self,model:str):
         #chain=prompt|llm|parser
         self._prompt=ChatPromptTemplate.from_messages([
             ("system",INTENT_RECOGNIZE_PROMPT),
@@ -77,7 +77,7 @@ class IntentRecognizer:
             ("human","{human_message}")
         ])
 
-        self._llm=llm
+        self._llm=ChatTongyi(model=model)
         self._chain=self._prompt|self._llm|StrOutputParser()
 
     def recognize(self,user_input:str,chat_history:str|None=None):
